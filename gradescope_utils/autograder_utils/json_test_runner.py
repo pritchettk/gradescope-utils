@@ -42,6 +42,9 @@ class JSONTestResult(result.TestResult):
     def getVisibility(self, test):
         return getattr(getattr(test, test._testMethodName), '__visibility__', None)
 
+    def getHideError(self, test):
+        return getattr(getattr(test, test._testMethodName), '__hide_error__', None)
+
     def getLeaderboardData(self, test):
         column_name = getattr(getattr(test, test._testMethodName), '__leaderboard_column__', None)
         sort_order = getattr(getattr(test, test._testMethodName), '__leaderboard_sort_order__', None)
@@ -68,13 +71,17 @@ class JSONTestResult(result.TestResult):
         tags = self.getTags(test)
         number = self.getNumber(test)
         visibility = self.getVisibility(test)
+        hide_error = self.getHideError(test)
         score = self.getScore(test)
         if score is None:
             score = weight if passed else 0.0
 
         output = self.getOutput()
         if err:
-            output += "Test Failed: {0}\n".format(err[1])
+            if hide_error:
+                output += "Test Failed: Error Hidden\n"
+            else:
+                output += "Test Failed: {0}\n".format(err[1])
         result = {
             "name": self.getDescription(test),
             "score": score,
