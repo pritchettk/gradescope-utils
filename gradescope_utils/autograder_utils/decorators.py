@@ -51,10 +51,10 @@ class visibility(object):
         return func
 
 
-class hide_error(object):
-    """Simple decorator to add a __hide_error__ property to a function
+class hide_errors(object):
+    """Simple decorator to add a __hide_errors__ property to a function
 
-    Usage: @hide_error(True)
+    Usage: @hide_errors(True)
 
     Used to hide the particular source of an error which caused a test to fail.
     Otherwise, a test's particular assertions can be seen by students.
@@ -64,7 +64,7 @@ class hide_error(object):
         self.val = val
 
     def __call__(self, func):
-        func.__hide_error__ = self.val
+        func.__hide_errors__ = self.val
         return func
 
 
