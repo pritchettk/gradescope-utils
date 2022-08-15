@@ -54,13 +54,13 @@ class visibility(object):
 class hide_errors(object):
     """Simple decorator to add a __hide_errors__ property to a function
 
-    Usage: @hide_errors(True)
+    Usage: @hide_errors("Error message to be shown upon test failure")
 
     Used to hide the particular source of an error which caused a test to fail.
     Otherwise, a test's particular assertions can be seen by students.
     """
 
-    def __init__(self, val):
+    def __init__(self, val="Test failed"):
         self.val = val
 
     def __call__(self, func):

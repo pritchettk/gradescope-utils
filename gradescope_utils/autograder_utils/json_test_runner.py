@@ -71,15 +71,15 @@ class JSONTestResult(result.TestResult):
         tags = self.getTags(test)
         number = self.getNumber(test)
         visibility = self.getVisibility(test)
-        hide_errors = self.getHideErrors(test)
+        hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
         if score is None:
             score = weight if passed else 0.0
 
         output = self.getOutput()
         if err:
-            if hide_errors:
-                output += "Test Failed.\n"
+            if hide_errors_message:
+                output += hide_errors_message
             else:
                 output += "Test Failed: {0}\n".format(err[1])
         result = {
