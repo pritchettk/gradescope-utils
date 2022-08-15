@@ -79,7 +79,7 @@ class JSONTestResult(result.TestResult):
         output = self.getOutput()
         if err:
             if hide_errors:
-                output += "Test Failed: Error Message Hidden\n"
+                output += "Test Failed.\n"
             else:
                 output += "Test Failed: {0}\n".format(err[1])
         result = {
