@@ -31,7 +31,7 @@ class JSONTestResult(result.TestResult):
         return getattr(getattr(test, test._testMethodName), '__tags__', None)
 
     def getWeight(self, test):
-        return getattr(getattr(test, test._testMethodName), '__weight__', 0.0)
+        return getattr(getattr(test, test._testMethodName), '__weight__', None)
 
     def getScore(self, test):
         return getattr(getattr(test, test._testMethodName), '__score__', None)
@@ -65,31 +65,32 @@ class JSONTestResult(result.TestResult):
             return out
 
     def buildResult(self, test, err=None):
-        passed = (err == None)
-
         weight = self.getWeight(test)
         tags = self.getTags(test)
         number = self.getNumber(test)
         visibility = self.getVisibility(test)
         hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
-        if score is None:
-            score = weight if passed else 0.0
-
         output = self.getOutput()
         if err:
             if hide_errors_message:
                 output += hide_errors_message
             else:
-                output += "Test Failed: {0}\n".format(err[1])
+                output += err[1] + '\n' if err[1] else 'Test Failed\n'
         result = {
             "name": self.getDescription(test),
-            "score": score,
-            "max_score": weight,
+            "status": "failed" if err else "passed",
         }
+        if score is not None or weight is not None:
+            if weight is None:
+                weight = 0.0
+            if score is None:
+                score = 0.0 if err else weight
+            result["score"] = score
+            result["max_score"] = weight
         if tags:
             result["tags"] = tags
-        if output and len(output) > 0:
+        if output:
             result["output"] = output
         if visibility:
             result["visibility"] = visibility
