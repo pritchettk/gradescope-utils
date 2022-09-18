@@ -65,6 +65,7 @@ class JSONTestResult(result.TestResult):
             return out
 
     def buildResult(self, test, err=None):
+        failed = err is not None
         weight = self.getWeight(test)
         tags = self.getTags(test)
         number = self.getNumber(test)
@@ -79,7 +80,6 @@ class JSONTestResult(result.TestResult):
                 output += err[1] + '\n' if err[1] else 'Test Failed\n'
         result = {
             "name": self.getDescription(test),
-            "status": "failed" if err else "passed",
         }
         if score is not None or weight is not None:
             if weight is None:
@@ -88,6 +88,11 @@ class JSONTestResult(result.TestResult):
                 score = 0.0 if err else weight
             result["score"] = score
             result["max_score"] = weight
+             # Also mark failure if points are lost
+            failed |= score < weight
+
+        result["status"] = "failed" if failed else "passed"
+
         if tags:
             result["tags"] = tags
         if output:
