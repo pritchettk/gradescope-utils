@@ -85,7 +85,7 @@ class JSONTestResult(result.TestResult):
             if weight is None:
                 weight = 0.0
             if score is None:
-                score = 0.0 if err else weight
+                score = 0.0 if failed else weight
             result["score"] = score
             result["max_score"] = weight
              # Also mark failure if points are lost
@@ -191,7 +191,7 @@ class JSONTestRunner(object):
 
         total_score = 0
         for test in self.json_data["tests"]:
-            total_score += test["score"]
+            total_score += test.get("score", 0.0)
         self.json_data["score"] = total_score
 
         if self.post_processor is not None:
