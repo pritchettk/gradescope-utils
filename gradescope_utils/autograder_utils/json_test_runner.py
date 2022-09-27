@@ -72,17 +72,16 @@ class JSONTestResult(result.TestResult):
         visibility = self.getVisibility(test)
         hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
-        output = self.getOutput()
+        output = self.getOutput() or ""
         if err:
             if hide_errors_message:
                 output += hide_errors_message
             else:
-                if output:
-                    # create a double newline
-                    if output.endswith('\n'):
-                        output += '\n'
-                    else:
-                        output += '\n\n'
+                # create a double newline
+                if output.endswith('\n'):
+                    output += '\n'
+                else:
+                    output += '\n\n'
                 output += "Test Failed: {0}\n".format(err[1])
         result = {
             "name": self.getDescription(test),
