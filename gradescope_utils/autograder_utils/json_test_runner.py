@@ -83,7 +83,7 @@ class JSONTestResult(result.TestResult):
                         output += '\n'
                     else:
                         output += '\n\n'
-                output += f'Fail: {err[1] or "<no msg>"}\n'
+                output += "Test Failed: {0}\n".format(err[1])
         result = {
             "name": self.getDescription(test),
         }
