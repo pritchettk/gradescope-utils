@@ -77,11 +77,12 @@ class JSONTestResult(result.TestResult):
             if hide_errors_message:
                 output += hide_errors_message
             else:
-                # create a double newline
-                if output.endswith('\n'):
-                    output += '\n'
-                else:
-                    output += '\n\n'
+                if output:
+                    # Create a double newline if output is not empty
+                    if output.endswith('\n'):
+                        output += '\n'
+                    else:
+                        output += '\n\n'
                 output += "Test Failed: {0}\n".format(err[1])
         result = {
             "name": self.getDescription(test),
