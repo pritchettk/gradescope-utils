@@ -31,7 +31,7 @@ class JSONTestResult(result.TestResult):
         return getattr(getattr(test, test._testMethodName), '__tags__', None)
 
     def getWeight(self, test):
-        return getattr(getattr(test, test._testMethodName), '__weight__', 0.0)
+        return getattr(getattr(test, test._testMethodName), '__weight__', None)
 
     def getScore(self, test):
         return getattr(getattr(test, test._testMethodName), '__score__', None)
@@ -65,31 +65,43 @@ class JSONTestResult(result.TestResult):
             return out
 
     def buildResult(self, test, err=None):
-        passed = (err == None)
-
+        failed = err is not None
         weight = self.getWeight(test)
         tags = self.getTags(test)
         number = self.getNumber(test)
         visibility = self.getVisibility(test)
         hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
-        if score is None:
-            score = weight if passed else 0.0
-
-        output = self.getOutput()
+        output = self.getOutput() or ""
         if err:
             if hide_errors_message:
                 output += hide_errors_message
             else:
+                if output:
+                    # Create a double newline if output is not empty
+                    if output.endswith('\n'):
+                        output += '\n'
+                    else:
+                        output += '\n\n'
                 output += "Test Failed: {0}\n".format(err[1])
         result = {
             "name": self.getDescription(test),
-            "score": score,
-            "max_score": weight,
         }
+        if score is not None or weight is not None:
+            if weight is None:
+                weight = 0.0
+            if score is None:
+                score = 0.0 if failed else weight
+            result["score"] = score
+            result["max_score"] = weight
+             # Also mark failure if points are lost
+            failed |= score < weight
+
+        result["status"] = "failed" if failed else "passed"
+
         if tags:
             result["tags"] = tags
-        if output and len(output) > 0:
+        if output:
             result["output"] = output
         if visibility:
             result["visibility"] = visibility
@@ -185,7 +197,7 @@ class JSONTestRunner(object):
 
         total_score = 0
         for test in self.json_data["tests"]:
-            total_score += test["score"]
+            total_score += test.get("score", 0.0)
         self.json_data["score"] = total_score
 
         if self.post_processor is not None:
