@@ -15,12 +15,12 @@ class JSONTestResult(result.TestResult):
     Used by JSONTestRunner.
     """
     def __init__(self, stream, descriptions, verbosity, results, leaderboard,
-                 test_output_prefix):
+                 failure_prefix):
         super(JSONTestResult, self).__init__(stream, descriptions, verbosity)
         self.descriptions = descriptions
         self.results = results
         self.leaderboard = leaderboard
-        self.test_output_prefix = test_output_prefix
+        self.failure_prefix = failure_prefix
 
     def getDescription(self, test):
         doc_first_line = test.shortDescription()
@@ -85,7 +85,7 @@ class JSONTestResult(result.TestResult):
                         output += '\n'
                     else:
                         output += '\n\n'
-                output += "{0}{1}\n".format(self.test_output_prefix, err[1])
+                output += "{0}{1}\n".format(self.failure_prefix, err[1])
         result = {
             "name": self.getDescription(test),
         }
@@ -149,7 +149,7 @@ class JSONTestRunner(object):
     def __init__(self, stream=sys.stdout, descriptions=True, verbosity=1,
                  failfast=False, buffer=True, visibility=None,
                  stdout_visibility=None, post_processor=None,
-                 test_output_prefix="Test Failed: "):
+                 failure_prefix="Test Failed: "):
         """
         Set buffer to True to include test output in JSON
 
@@ -159,7 +159,7 @@ class JSONTestRunner(object):
         test results (e.g. add a late penalty) by editing the results
         dict in the first argument.
 
-        text_output_prefix: prepended to the output of each test's json
+        failure_prefix: prepended to the output of each test's json
         """
         self.stream = stream
         self.descriptions = descriptions
@@ -175,12 +175,12 @@ class JSONTestRunner(object):
             self.json_data["visibility"] = visibility
         if stdout_visibility:
             self.json_data["stdout_visibility"] = stdout_visibility
-        self.test_output_prefix = test_output_prefix
+        self.failure_prefix = failure_prefix
 
     def _makeResult(self):
         return self.resultclass(self.stream, self.descriptions, self.verbosity,
                                 self.json_data["tests"], self.json_data["leaderboard"],
-                                self.test_output_prefix)
+                                self.failure_prefix)
 
     def run(self, test):
         "Run the given test case or test suite."
