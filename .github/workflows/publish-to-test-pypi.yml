@@ -1,14 +1,14 @@
-name: Publish Python packages 📦 to PyPI and TestPyPI
+name: Build and publish artifacts
 
 on: push
 
 jobs:
-  build-n-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
+  build-artifacts:
+    name: Build Python packages
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -43,6 +43,12 @@ jobs:
         path: |
           dist/*.whl
 
+  publish-artifacts:
+    name: Publish Python packages
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
