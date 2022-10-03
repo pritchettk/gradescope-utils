@@ -29,12 +29,19 @@ jobs:
         --outdir dist/
         .
 
-    - name: Archive build artifacts
+    - name: Archive source distribution
       uses: actions/upload-artifact@v3
       with:
-        name: dist
+        name: sdist
         path: |
-          dist/
+          dist/*.tar.gz
+
+    - name: Archive wheel
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheel
+        path: |
+          dist/*.whl
 
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
