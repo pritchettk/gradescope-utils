@@ -26,7 +26,7 @@ Follow https://packaging.python.org/tutorials/packaging-projects/, but in brief:
   - This can take care of tagging for you. Otherwise, tag the commit: `git tag vX.Y.Z COMMIT_SHA`
   - Make sure that the setup.py version matches the release/tag version
   - GitHub releases can help auto-generate release notes from merged PRs. Edit these as necessary.
-3. GitHub Actions will build and publish a new release when a version is tagged (e.g. when a release is published).
+3. GitHub Actions will build and publish a new release when a version is tagged (e.g. when a GitHub release is published).
 
 ## Support
 
