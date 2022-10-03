@@ -29,19 +29,12 @@ jobs:
         --outdir dist/
         .
 
-    - name: Archive source distribution
+    - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: sdist
+        name: dist
         path: |
-          dist/*.tar.gz
-
-    - name: Archive wheel
-      uses: actions/upload-artifact@v3
-      with:
-        name: wheel
-        path: |
-          dist/*.whl
+          dist
 
   publish-artifacts:
     name: Publish Python packages
@@ -52,7 +45,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/download-artifact@v3
       with:
-        path: dist
+        path: .
     
     - name: Display structure of downloaded files
       run: ls -R
