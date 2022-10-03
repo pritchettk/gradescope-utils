@@ -23,8 +23,8 @@ Follow https://packaging.python.org/tutorials/packaging-projects/, but in brief:
 
 1. Bump the version in setup.py
 2. Draft a release on https://github.com/gradescope/gradescope-utils/releases
-  a) This can take care of tagging for you. Otherwise, tag the commit: `git tag vX.Y.Z COMMIT_SHA`
-  b) Make sure that the setup.py version matches the tag
+  - This can take care of tagging for you. Otherwise, tag the commit: `git tag vX.Y.Z COMMIT_SHA`
+  - Make sure that the setup.py version matches the release/tag version
 3. GitHub Actions will build and publish a new release when a version is tagged.
 
 ## Support
