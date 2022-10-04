@@ -22,9 +22,11 @@ See the [Releases](https://github.com/gradescope/gradescope-utils/releases) page
 Follow https://packaging.python.org/tutorials/packaging-projects/, but in brief:
 
 1. Bump the version in setup.py
-2. Tag the commit: `git tag vX.Y.Z COMMIT_SHA`
-3. Build new packages: `python3 setup.py sdist bdist_wheel`
-4. Upload packages: `python3 -m twine upload dist/*`
+2. Draft a release on https://github.com/gradescope/gradescope-utils/releases
+  - This can take care of tagging for you. Otherwise, tag the commit: `git tag vX.Y.Z COMMIT_SHA`
+  - Make sure that the setup.py version matches the release/tag version
+  - GitHub releases can help auto-generate release notes from merged PRs. Edit these as necessary.
+3. Publish the release on GitHub. GitHub Actions will build and publish a new release when a version is tagged (e.g. when a GitHub release is published).
 
 ## Support
 
