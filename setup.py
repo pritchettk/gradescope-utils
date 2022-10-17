@@ -26,6 +26,7 @@ setup(
 
     description='Utilities for building Gradescope autograders',
     long_description=long_description,
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
     url='https://github.com/gradescope/gradescope-utils',
