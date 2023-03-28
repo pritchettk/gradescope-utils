@@ -10,9 +10,4 @@ class GradescopeDjangoRunner(DiscoverRunner):
         super().__init__(*args, **kwargs)
 
     def run_suite(self, suite, **kwargs):
-        return JSONTestRunner(
-            stream=sys.stdout, descriptions=True, verbosity=1,
-            failfast=False, buffer=True, visibility="visible",
-            stdout_visibility=None, post_processor=None,
-            failure_prefix="Test Failed: "
-        ).run(suite)
+        return JSONTestRunner(**kwargs).run(suite)
