@@ -3,7 +3,7 @@ from django.test.runner import DiscoverRunner
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
 
-class GradescopeRunner(DiscoverRunner):
+class GradescopeDjangoRunner(DiscoverRunner):
     """Replacing Django Default Unit Test Runner with Gradescope Test Runner"""
 
     def __init__(self, *args, **kwargs):
