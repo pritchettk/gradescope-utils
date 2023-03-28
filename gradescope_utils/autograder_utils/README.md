@@ -88,7 +88,7 @@ To enable this, complete the following steps:
 
 First, in your settings.py, insert the line:
 ```
-`TEST_RUNNER = 'gradescope_utils.autograder_utils.GradescopeRunner.GradescopeRunner'`
+`TEST_RUNNER = 'gradescope_utils.autograder_utils.gradescope_django_runner.GradescopeDjangoRunner'`
 ```
 
 Then, within your `run_autograder`, run the following command:
