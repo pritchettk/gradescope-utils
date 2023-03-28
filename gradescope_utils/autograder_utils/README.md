@@ -81,7 +81,7 @@ Example output:
 }
 ```
 
-### GradescopeRunner
+### GradescopeDjangoRunner
 This allows for an integration between Django testing, which utilizes unittest and 
 Gradescope's JSONTestRunner to obtain the JSON output of the Django test cases. 
 To enable this, complete the following steps:  
