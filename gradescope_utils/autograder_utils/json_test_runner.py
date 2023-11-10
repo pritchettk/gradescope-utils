@@ -75,6 +75,7 @@ class JSONTestResult(result.TestResult):
         hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
         output = self.getOutput() or ""
+
         if err:
             if hide_errors_message:
                 output += hide_errors_message
@@ -219,6 +220,16 @@ class JSONTestRunner(object):
         if self.post_processor is not None:
             self.post_processor(self.json_data)
 
+
+        while i < len(self.json_data["tests"]):
+            if self.json_data["tests"][i]["name"] == self.json_data["tests"][i+1]["name"]:
+                self.json_data["tests"][i]["output"] += self.json_data["tests"][i+1]["output"]
+                del self.json_data["tests"][i+1]
+            else:
+                i += 1
+                if i >= len(self.json_data["tests"]):
+                    break
+        
         json.dump(self.json_data, self.stream, indent=4)
         self.stream.write('\n')
         return result
