@@ -144,9 +144,9 @@ class JSONTestResult(result.TestResult):
         if outcome == None:
             pass
         else:
-            super(JSONTestResult, self).addFailure(subtest, outcome)
+            super(JSONTestResult, self).addFailure(test, outcome)
             self._mirrorOutput = False
-            self.processResult(subtest, outcome)
+            self.processResult(test, outcome)
 
 
 class JSONTestRunner(object):
