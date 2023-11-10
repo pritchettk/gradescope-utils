@@ -142,8 +142,7 @@ class JSONTestResult(result.TestResult):
 
     def addSubTest(self, test, subtest, outcome):
         if outcome == None:
-            super(JSONTestResult, self).addSuccess(subtest)
-        
+            pass
         else:
             super(JSONTestResult, self).addFailure(subtest, outcome)
             self._mirrorOutput = False
