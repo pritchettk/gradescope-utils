@@ -146,7 +146,7 @@ class JSONTestResult(result.TestResult):
         else:
             super(JSONTestResult, self).addFailure(test, outcome)
             self._mirrorOutput = False
-            self.processResult(test, outcome)
+            self.processResult(subtest, outcome)
 
 
 class JSONTestRunner(object):
