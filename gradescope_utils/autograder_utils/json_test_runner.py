@@ -227,7 +227,7 @@ class JSONTestRunner(object):
                 del self.json_data["tests"][i+1]
             else:
                 i += 1
-                if i >= len(self.json_data["tests"]):
+                if i + 1 >= len(self.json_data["tests"]):
                     break
         
         json.dump(self.json_data, self.stream, indent=4)
