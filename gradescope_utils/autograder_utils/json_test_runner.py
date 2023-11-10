@@ -140,6 +140,16 @@ class JSONTestResult(result.TestResult):
         self._mirrorOutput = False
         self.processResult(test, err)
 
+    def addSubTest(self, test, subtest, outcome):
+        if outcome == None:
+            super(JSONTestResult, self).addSuccess(subtest)
+        
+        else:
+            super(JSONTestResult, self).addFailure(subtest, outcome)
+            self._mirrorOutput = False
+        
+        self.processResult(subtest, outcome)
+
 
 class JSONTestRunner(object):
     """A test runner class that displays results in JSON form.
