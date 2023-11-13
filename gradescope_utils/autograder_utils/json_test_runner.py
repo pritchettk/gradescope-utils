@@ -79,7 +79,6 @@ class JSONTestResult(result.TestResult):
         score = self.getScore(test)
         output = self.getOutput() or ""
         merge_subtests = self.getMergeSubtests(test)
-
         if err:
             if hide_errors_message:
                 output += hide_errors_message
@@ -114,7 +113,8 @@ class JSONTestResult(result.TestResult):
             result["visibility"] = visibility
         if number:
             result["number"] = number
-        result["merge_subtests"] = merge_subtests
+        if merge_subtests:
+            result["merge_subtests"] = merge_subtests
         return result
 
     def buildLeaderboardEntry(self, test):
@@ -234,7 +234,7 @@ class JSONTestRunner(object):
             i = 0
             while i < len(self.json_data["tests"]):
                 if (self.json_data["tests"][i]["name"] == self.json_data["tests"][i+1]["name"]
-                    and self.json_data["tests"][i]["merge_subtests"] == True):
+                    and self.json_data["tests"][i]["merge_subtests"] == 'True'):
                     self.json_data["tests"][i]["output"] += self.json_data["tests"][i+1]["output"]
                     del self.json_data["tests"][i+1]
                 else:
