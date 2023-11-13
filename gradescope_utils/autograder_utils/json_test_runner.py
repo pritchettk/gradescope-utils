@@ -227,8 +227,6 @@ class JSONTestRunner(object):
                 if self.json_data["tests"][i]["name"] == self.json_data["tests"][i+1]["name"]:
                     self.json_data["tests"][i]["output"] += self.json_data["tests"][i+1]["output"]
                     del self.json_data["tests"][i+1]
-                    if i + 1 >= len(self.json_data["tests"]):
-                        break
                 else:
                     i += 1
                     if i + 1 >= len(self.json_data["tests"]):
