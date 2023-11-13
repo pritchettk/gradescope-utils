@@ -229,7 +229,8 @@ class JSONTestRunner(object):
 
         json.dump(self.json_data, self.stream, indent=4)
         self.stream.write('\n')
-        
+        print(self.json_data)
+
         if len(self.json_data["tests"]) > 1:
             i = 0
             while i < len(self.json_data["tests"]):
