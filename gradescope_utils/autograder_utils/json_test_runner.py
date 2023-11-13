@@ -114,8 +114,7 @@ class JSONTestResult(result.TestResult):
             result["visibility"] = visibility
         if number:
             result["number"] = number
-        if merge_subtests:
-            result["merge_subtests"] = merge_subtests
+        result["merge_subtests"] = merge_subtests
         return result
 
     def buildLeaderboardEntry(self, test):
