@@ -165,7 +165,7 @@ class JSONTestRunner(object):
                  failfast=False, buffer=True, visibility=None,
                  stdout_visibility=None, post_processor=None,
                  failure_prefix="Test Failed: ",
-                 merge_subtests=False):
+                 merge_subtests=True):
         """
         Set buffer to True to include test output in JSON
 
