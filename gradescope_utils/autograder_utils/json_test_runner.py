@@ -225,12 +225,9 @@ class JSONTestRunner(object):
         if self.post_processor is not None:
             self.post_processor(self.json_data)
 
-
-        json.dump(self.json_data, self.stream, indent=4)
-        self.stream.write('\n')
-        print(self.json_data)
-
-        if len(self.json_data["tests"]) > 1:
+        if ("merge_subtests" in self.json_data["tests"] 
+            and len(self.json_data["tests"]) > 1):
+            
             i = 0
             while i < len(self.json_data["tests"]):
                 if (self.json_data["tests"][i]["name"] == self.json_data["tests"][i+1]["name"]
@@ -242,5 +239,7 @@ class JSONTestRunner(object):
                     if i + 1 >= len(self.json_data["tests"]):
                         break
             
+        json.dump(self.json_data, self.stream, indent=4)
+        self.stream.write('\n')
 
         return result
