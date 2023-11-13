@@ -78,6 +78,7 @@ class JSONTestResult(result.TestResult):
         hide_errors_message = self.getHideErrors(test)
         score = self.getScore(test)
         output = self.getOutput() or ""
+        merge_subtests = self.getMergeSubtests(test)
 
         if err:
             if hide_errors_message:
@@ -113,6 +114,8 @@ class JSONTestResult(result.TestResult):
             result["visibility"] = visibility
         if number:
             result["number"] = number
+        if merge_subtests:
+            result["merge_subtests"] = merge_subtests
         return result
 
     def buildLeaderboardEntry(self, test):
